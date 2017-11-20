@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class CriarContaActivity extends AppCompatActivity {
 
     ArrayList<Conta> contas;
-    ContaDao contaDao;
+    ContaDao contaDao = new ContaDao();
     EditText editContaNumero;
 
     @Override

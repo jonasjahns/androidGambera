@@ -54,18 +54,14 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.btnContaCriar:
                 it = new Intent(this, CriarContaActivity.class);
-                it.putParcelableArrayListExtra(InicioActivity.PAR_CONTAS, contas);
-                it.putExtra(InicioActivity.codigoContas, codContas);
                 startActivity(it);
                 break;
             case R.id.btnContaListar:
                 it = new Intent(this, ListarContaActivity.class);
-                it.putParcelableArrayListExtra(InicioActivity.PAR_CONTAS, contas);
                 startActivity(it);
                 break;
             case R.id.btnContaEditar:
                 it = new Intent(this, EditarContaActivity.class);
-                it.putParcelableArrayListExtra(InicioActivity.PAR_CONTAS, contas);
                 startActivity(it);
                 break;
         }
