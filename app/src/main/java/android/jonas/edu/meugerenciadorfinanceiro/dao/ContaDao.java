@@ -28,6 +28,17 @@ public class ContaDao {
         long id = db.insert(ClassesContrato.Conta.TABLE_NAME, null, contentValues);
     }
 
+    public void update(Conta conta, Context context) {
+        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SQLiteDatabase db = contaSqlHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ClassesContrato.Conta.COLUMN_NAME_NUMERO, conta.getNumero());
+        String selection = ClassesContrato.Conta._ID + " = ?";
+        String[] selectionArgs = {String.valueOf(conta.getId())};
+        db.update(ClassesContrato.Conta.TABLE_NAME, contentValues,selection,selectionArgs);
+    }
+
     public ArrayList<Conta> getAll(Context context) {
         ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
@@ -66,9 +77,17 @@ public class ContaDao {
 
     public void deleteAll(Context context) {
         ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
-        SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
+        SQLiteDatabase db = contaSqlHelper.getWritableDatabase();
 
-        long id = db.delete(ClassesContrato.Conta.TABLE_NAME, null, null);
+        db.delete(ClassesContrato.Conta.TABLE_NAME, null, null);
+    }
+
+    public void deleteById(Context context, Long id) {
+        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SQLiteDatabase db = contaSqlHelper.getWritableDatabase();
+        String selection = ClassesContrato.Conta._ID + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        db.delete(ClassesContrato.Conta.TABLE_NAME, selection, selectionArgs);
     }
 
     public Conta getById(Context context, Integer id) {
