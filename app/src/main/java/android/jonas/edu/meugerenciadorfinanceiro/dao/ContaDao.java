@@ -28,6 +28,17 @@ public class ContaDao {
         long id = db.insert(ClassesContrato.Conta.TABLE_NAME, null, contentValues);
     }
 
+    public void update(Conta conta, Context context) {
+        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SQLiteDatabase db = contaSqlHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ClassesContrato.Conta.COLUMN_NAME_NUMERO, conta.getNumero());
+        String selection = ClassesContrato.Conta._ID + " = ?";
+        String[] selectionArgs = {String.valueOf(conta.getId())};
+        db.update(ClassesContrato.Conta.TABLE_NAME, contentValues,selection,selectionArgs);
+    }
+
     public ArrayList<Conta> getAll(Context context) {
         ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
