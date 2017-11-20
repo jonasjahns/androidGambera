@@ -79,7 +79,7 @@ public class ContaDao {
         db.delete(ClassesContrato.Conta.TABLE_NAME, selection, selectionArgs);
     }
 
-    public Conta getById(Context context, Conta conta) {
+    public Conta getById(Context context, Integer id) {
         ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
 
@@ -92,7 +92,7 @@ public class ContaDao {
         Conta contaDb = null;
 
         String selection = ClassesContrato.Conta._ID + " = ?";
-        String[] selectionArgs = {String.valueOf(conta.getId())};
+        String[] selectionArgs = {String.valueOf(id)};
         String sortOrder = ClassesContrato.Conta.TABLE_NAME + " ASC";
 
         Cursor cursorContas = db.query(
@@ -109,7 +109,7 @@ public class ContaDao {
             long itemId = cursorContas.getLong(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta._ID));
             int numero = cursorContas.getInt(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta.COLUMN_NAME_NUMERO));
             BigDecimal saldo = new BigDecimal(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta.COLUMN_NAME_SALDO));
-            contaDb = new Conta(itemId, numero,saldo);
+            contaDb = new Conta(itemId, numero, saldo);
         }
 
         return contaDb;

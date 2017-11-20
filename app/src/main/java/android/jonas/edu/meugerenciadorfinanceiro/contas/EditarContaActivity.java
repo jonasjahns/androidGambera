@@ -15,9 +15,5 @@ public class EditarContaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_conta);
-
-        contas = getIntent().getParcelableArrayListExtra(InicioActivity.PAR_CONTAS);
-
-
     }
 }
