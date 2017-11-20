@@ -51,14 +51,12 @@ public class ContaDao {
                 sortOrder
         );
 
-        if (cursorContas.moveToFirst())
-        {
-            while (cursorContas.isAfterLast() == false)
-            {
+        if (cursorContas.moveToFirst()) {
+            while (cursorContas.isAfterLast() == false) {
                 long itemId = cursorContas.getLong(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta._ID));
                 int numero = cursorContas.getInt(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta.COLUMN_NAME_NUMERO));
                 BigDecimal saldo = new BigDecimal(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta.COLUMN_NAME_SALDO));
-                contas.add(new Conta (itemId,numero,saldo));
+                contas.add(new Conta(itemId, numero, saldo));
                 cursorContas.moveToNext();
             }
         }
@@ -66,16 +64,14 @@ public class ContaDao {
         return contas;
     }
 
-    public void deleteAll(Context context)
-    {
+    public void deleteAll(Context context) {
         ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
 
-        long id = db.delete(ClassesContrato.Conta.TABLE_NAME, null ,null);
+        long id = db.delete(ClassesContrato.Conta.TABLE_NAME, null, null);
     }
 
-    public Conta getById (Context context, Conta conta)
-    {
+    public Conta getById(Context context, Conta conta) {
         ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
 
@@ -85,9 +81,30 @@ public class ContaDao {
                 ClassesContrato.Conta.COLUMN_NAME_SALDO,
         };
 
-        Conta contaDb =  null;
+        Conta contaDb = null;
 
-        return  contaDb
+        String selection = ClassesContrato.Conta._ID + " = ?";
+        String[] selectionArgs = {String.valueOf(conta.getId())};
+        String sortOrder = ClassesContrato.Conta.TABLE_NAME + " ASC";
+
+        Cursor cursorContas = db.query(
+                ClassesContrato.Conta.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+
+        if (cursorContas.moveToFirst()) {
+            long itemId = cursorContas.getLong(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta._ID));
+            int numero = cursorContas.getInt(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta.COLUMN_NAME_NUMERO));
+            BigDecimal saldo = new BigDecimal(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta.COLUMN_NAME_SALDO));
+            contaDb = new Conta(itemId, numero,saldo);
+        }
+
+        return contaDb;
     }
 }
 
