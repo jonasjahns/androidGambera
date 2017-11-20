@@ -2,11 +2,13 @@ package android.jonas.edu.meugerenciadorfinanceiro.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.jonas.edu.meugerenciadorfinanceiro.contas.Conta;
 import android.jonas.edu.meugerenciadorfinanceiro.model.database.ClassesContrato;
 import android.jonas.edu.meugerenciadorfinanceiro.model.database.ContaSqlHelper;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -39,7 +41,29 @@ public class ContaDao {
 
         String sortOrder = ClassesContrato.Conta.TABLE_NAME + " ASC";
 
-        return  contas;
+        Cursor cursorContas = db.query(
+                ClassesContrato.Conta.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                sortOrder
+        );
+
+        if (cursorContas.moveToFirst())
+        {
+            while (cursorContas.isAfterLast() == false)
+            {
+                long itemId = cursorContas.getLong(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta._ID));
+                int numero = cursorContas.getInt(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta.COLUMN_NAME_NUMERO));
+                BigDecimal saldo = new BigDecimal(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta.COLUMN_NAME_SALDO));
+                contas.add(new Conta (itemId,numero,saldo));
+                cursorContas.moveToNext();
+            }
+        }
+        cursorContas.close();
+        return contas;
     }
 }
 
