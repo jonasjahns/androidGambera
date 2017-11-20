@@ -9,7 +9,12 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class ContaSqlHelper extends SQLiteOpenHelper {
-    private static final String SQL_CREATE_ENTRIES = "CREATE TABLE";
+    private static final String SQL_CREATE_ENTRIES = "CREATE TABLE" + ClassesContrato.Conta.TABLE_NAME + " ("+
+            ClassesContrato.Conta._ID + " INTEGER PRIMARY KEY," +
+            ClassesContrato.Conta.COLUMN_NAME_NUMERO + DefinicaoDb.INTEGER_TYPE + DefinicaoDb.COMMA_SEP +
+            ClassesContrato.Conta.COLUMN_NAME_SALDO + DefinicaoDb.REAL_TYPE + " )";
+
+    private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + ClassesContrato.Conta.TABLE_NAME;
 
     public ContaSqlHelper(Context context) {
         super(context, DefinicaoDb.DATABASE_NAME, null, DefinicaoDb.DATABASE_VERSION);
