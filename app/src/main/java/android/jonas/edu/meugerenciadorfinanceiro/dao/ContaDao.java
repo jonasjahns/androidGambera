@@ -65,5 +65,29 @@ public class ContaDao {
         cursorContas.close();
         return contas;
     }
+
+    public void deleteAll(Context context)
+    {
+        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
+
+        long id = db.delete(ClassesContrato.Conta.TABLE_NAME, null ,null);
+    }
+
+    public Conta getById (Context context, Conta conta)
+    {
+        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
+
+        String[] projection = {
+                ClassesContrato.Conta._ID,
+                ClassesContrato.Conta.COLUMN_NAME_NUMERO,
+                ClassesContrato.Conta.COLUMN_NAME_SALDO,
+        };
+
+        Conta contaDb =  null;
+
+        return  contaDb
+    }
 }
 

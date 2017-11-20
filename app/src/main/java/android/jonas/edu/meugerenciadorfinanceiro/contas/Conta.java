@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  */
 
 public class Conta implements  Parcelable{
-    Integer id;
+    Long id;
     Integer numero;
     BigDecimal saldo;
 
@@ -28,7 +28,7 @@ public class Conta implements  Parcelable{
 
     Conta(Parcel parcel)
     {
-        id = new Integer(parcel.readString());
+        id = new Long(parcel.readString());
         numero = new Integer(parcel.readString());
         saldo = new BigDecimal(parcel.readString());
     }
@@ -46,11 +46,11 @@ public class Conta implements  Parcelable{
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -70,7 +70,7 @@ public class Conta implements  Parcelable{
         this.saldo = saldo;
     }
 
-    public Conta(Integer id, Integer numero, BigDecimal saldo) {
+    public Conta(Long id, Integer numero, BigDecimal saldo) {
         this.id = id;
         this.numero = numero;
         this.saldo = saldo;
