@@ -26,16 +26,16 @@
         android:layout_marginTop="8dp"
         android:text="Criar Conta"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnContaEditar" />
+        app:layout_constraintTop_toBottomOf="@+id/btnContaConsultar" />
 
     <Button
-        android:id="@+id/btnContaEditar"
+        android:id="@+id/btnContaConsultar"
         android:layout_width="368dp"
         android:layout_height="60dp"
         android:layout_marginLeft="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="73dp"
-        android:text="EDITAR CONTA"
+        android:text="CONSULTAR CONTA"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -60,7 +60,7 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
                 it = new Intent(this, ListarContaActivity.class);
                 startActivity(it);
                 break;
-            case R.id.btnContaEditar:
+            case R.id.btnContaConsultar:
                 it = new Intent(this, EditarContaActivity.class);
                 startActivity(it);
                 break;

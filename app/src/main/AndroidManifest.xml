@@ -38,7 +38,8 @@
         </activity>
         <activity android:name=".contas.CriarContaActivity" />
         <activity android:name=".contas.ListarContaActivity" />
-        <activity android:name=".contas.EditarContaActivity"></activity>
+        <activity android:name=".contas.EditarContaActivity" />
+        <activity android:name=".contas.ConsultarContaActivity"></activity>
     </application>
 
 </manifest>
