@@ -92,5 +92,62 @@ public class LancamentoDao {
         cursorLancamentos.close();
         return  lancamentos;
     }
+
+    public void deleteAll(Context context) {
+        LancamentoSqlHelper lancamentoSqlHelper = new LancamentoSqlHelper(context);
+        SQLiteDatabase db = lancamentoSqlHelper.getReadableDatabase();
+
+        db.delete(ClassesContrato.Lancamento.TABLE_NAME, null, null);
+    }
+
+    public Lancamento getById(Context context, Integer id) {
+        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
+
+        String[] projection = {
+                ClassesContrato.Lancamento._ID,
+                ClassesContrato.Lancamento.COLUMN_NAME_DESCRICAO,
+                ClassesContrato.Lancamento.COLUMN_NAME_CATEGORIA,
+                ClassesContrato.Lancamento.COLUMN_NAME_SITUACAO,
+                ClassesContrato.Lancamento.COLUMN_NAME_DATA_CRIACAO,
+                ClassesContrato.Lancamento.COLUMN_NAME_DATA_LANCAMENTO,
+                ClassesContrato.Lancamento.COLUMN_NAME_VALOR_LANCAMENTO,
+                ClassesContrato.Lancamento.COLUMN_NAME_NUMERO_PARCELAS,
+                ClassesContrato.Lancamento.COLUMN_NAME_CODIGO_PAI,
+                ClassesContrato.Conta.COLUMN_NAME_SALDO
+        };
+
+        Lancamento lancamentoDb = null;
+
+        String selection = ClassesContrato.Lancamento._ID + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        String sortOrder = ClassesContrato.Conta.TABLE_NAME + " ASC";
+
+        Cursor cursorLancamentos = db.query(
+                ClassesContrato.Lancamento.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+
+        if (cursorLancamentos.moveToFirst()){
+
+                Integer codigo = cursorLancamentos.getInt(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento._ID));
+                String descricao = cursorLancamentos.getString(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_DESCRICAO));
+                String categoria = cursorLancamentos.getString(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_CATEGORIA));
+                String situacao = cursorLancamentos.getString(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_SITUACAO));
+                Date dataCriacao = new Date(cursorLancamentos.getLong(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_DATA_CRIACAO)));
+                Date dataLancamento = new Date(cursorLancamentos.getLong(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_DATA_LANCAMENTO)));
+                BigDecimal valorLancamento = new BigDecimal(cursorLancamentos.getLong(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_VALOR_LANCAMENTO)));
+                Integer numeroParcelas = cursorLancamentos.getInt(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_NUMERO_PARCELAS));
+                Integer codigo_pai = cursorLancamentos.getInt(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_CODIGO_PAI));
+                lancamentoDb = new Lancamento (codigo, descricao, categoria, situacao, dataCriacao, dataLancamento, valorLancamento, numeroParcelas, codigo_pai);
+        }
+
+        return lancamentoDb;
+    }
 }
 
