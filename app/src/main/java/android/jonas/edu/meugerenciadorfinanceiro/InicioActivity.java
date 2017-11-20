@@ -56,7 +56,7 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
                 it = new Intent(this, CriarContaActivity.class);
                 it.putParcelableArrayListExtra(InicioActivity.PAR_CONTAS, contas);
                 it.putExtra(InicioActivity.codigoContas, codContas);
-                startActivityForResult(it, REQUEST_CRIAR);
+                startActivity(it);
                 break;
             case R.id.btnContaListar:
                 it = new Intent(this, ListarContaActivity.class);
@@ -66,20 +66,8 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.btnContaEditar:
                 it = new Intent(this, EditarContaActivity.class);
                 it.putParcelableArrayListExtra(InicioActivity.PAR_CONTAS, contas);
-                startActivityForResult(it, REQUEST_EDITAR);
+                startActivity(it);
                 break;
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CRIAR) {
-            contas = data.getParcelableArrayListExtra(PAR_CONTAS);
-            codContas = data.getIntExtra(InicioActivity.codigoContas, 0);
-        }
-        if (resultCode == RESULT_OK && requestCode == REQUEST_EDITAR) {
-            contas = data.getParcelableArrayListExtra(PAR_CONTAS);
         }
     }
 }
