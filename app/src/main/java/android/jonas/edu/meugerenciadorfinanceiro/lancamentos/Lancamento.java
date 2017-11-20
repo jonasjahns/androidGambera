@@ -22,6 +22,13 @@ public class Lancamento implements  Parcelable{
     Integer codigo_pai;
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
+    public String getDataCriacaoFormatada(){
+        return df.format(this.dataCriacao);
+    }
+    public String getDataLancamentoFormatada(){
+        return df.format(this.dataLancamento);
+    }
+
     public static final Creator<Lancamento> CREATOR = new Creator<Lancamento>() {
         @Override
         public Lancamento createFromParcel(Parcel source) {
