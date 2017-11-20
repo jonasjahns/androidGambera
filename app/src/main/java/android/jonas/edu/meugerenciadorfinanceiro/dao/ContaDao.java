@@ -66,9 +66,17 @@ public class ContaDao {
 
     public void deleteAll(Context context) {
         ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
-        SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
+        SQLiteDatabase db = contaSqlHelper.getWritableDatabase();
 
-        long id = db.delete(ClassesContrato.Conta.TABLE_NAME, null, null);
+        db.delete(ClassesContrato.Conta.TABLE_NAME, null, null);
+    }
+
+    public void deleteById(Context context, Long id) {
+        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SQLiteDatabase db = contaSqlHelper.getWritableDatabase();
+        String selection = ClassesContrato.Conta._ID + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        db.delete(ClassesContrato.Conta.TABLE_NAME, selection, selectionArgs);
     }
 
     public Conta getById(Context context, Conta conta) {

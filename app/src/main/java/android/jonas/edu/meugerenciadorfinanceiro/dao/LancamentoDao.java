@@ -95,7 +95,7 @@ public class LancamentoDao {
 
     public void deleteAll(Context context) {
         LancamentoSqlHelper lancamentoSqlHelper = new LancamentoSqlHelper(context);
-        SQLiteDatabase db = lancamentoSqlHelper.getReadableDatabase();
+        SQLiteDatabase db = lancamentoSqlHelper.getWritableDatabase();
 
         db.delete(ClassesContrato.Lancamento.TABLE_NAME, null, null);
     }
