@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">MeuGerenciadorFinanceiro</string>
+    <string-array name="categorias">
+        <item>Lazer</item>
+        <item>Transporte</item>
+        <item>Casa</item>
+        <item>Escola</item>
+        <item>Saúde</item>
+        <item>Salario</item>
+    </string-array>
+    <string-array name="parcelas">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="tipo">
+        <item>Despesa</item>
+        <item>Receita</item>
+    </string-array>
+    <string-array name="gaveta">
+        <item>Lançamentos</item>
+        <item>Criar Conta</item>
+        <item>Excluir Conta</item>
+        <item>Editar Conta</item>
+        <item>Listar Conta</item>
+    </string-array>
+    <string name="title_activity_ateg">ateg</string>
+    <string name="title_activity_categoria">CategoriaActivity</string>
+    <string name="title_activity_parcelas">ParcelasActivity</string>
+    <string name="title_activity_inicio">InicioActivity</string>
+</resources>
