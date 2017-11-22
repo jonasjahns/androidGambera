@@ -20,7 +20,7 @@ public class ConsultarContaActivity extends AppCompatActivity {
     public void buscarOnClick(View view)
     {
         Intent it = new Intent(this, EditarContaActivity.class);
-        it.putExtra("idConta", editContaCodigo.getText());
+        it.putExtra("idConta", editContaCodigo.getText().toString());
         startActivity(it);
     }
 }

@@ -1,6 +1,7 @@
 package android.jonas.edu.meugerenciadorfinanceiro;
 
 import android.content.Intent;
+import android.jonas.edu.meugerenciadorfinanceiro.contas.ConsultarContaActivity;
 import android.jonas.edu.meugerenciadorfinanceiro.contas.Conta;
 import android.jonas.edu.meugerenciadorfinanceiro.contas.CriarContaActivity;
 import android.jonas.edu.meugerenciadorfinanceiro.contas.EditarContaActivity;
@@ -26,7 +27,6 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
 
     Button btnContaListar;
     Button btnContaEditar;
-    Button btnContaExcluir;
     Button btnContaCriar;
     Button btnLancamentos;
     ArrayList<Conta> contas = new ArrayList<>();
@@ -37,13 +37,12 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_inicio);
 
         btnContaListar = (Button) findViewById(R.id.btnContaListar);
-        btnContaEditar = (Button) findViewById(R.id.btnContaEditar);
+        btnContaEditar = (Button) findViewById(R.id.btnContaConsultar);
         btnContaCriar = (Button) findViewById(R.id.btnContaCriar);
         btnLancamentos = (Button) findViewById(R.id.btnLancamentos);
 
         btnContaListar.setOnClickListener(this);
         btnContaEditar.setOnClickListener(this);
-        btnContaExcluir.setOnClickListener(this);
         btnContaCriar.setOnClickListener(this);
         btnLancamentos.setOnClickListener(this);
     }
@@ -61,7 +60,7 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(it);
                 break;
             case R.id.btnContaConsultar:
-                it = new Intent(this, EditarContaActivity.class);
+                it = new Intent(this, ConsultarContaActivity.class);
                 startActivity(it);
                 break;
         }

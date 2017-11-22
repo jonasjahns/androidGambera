@@ -50,7 +50,7 @@ public class ContaDao {
         };
         ArrayList<Conta> contas = new ArrayList<>();
 
-        String sortOrder = ClassesContrato.Conta.TABLE_NAME + " ASC";
+        String sortOrder = ClassesContrato.Conta._ID + " ASC";
 
         Cursor cursorContas = db.query(
                 ClassesContrato.Conta.TABLE_NAME,
@@ -85,12 +85,15 @@ public class ContaDao {
     public void deleteById(Context context, Long id) {
         ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getWritableDatabase();
-        String selection = ClassesContrato.Conta._ID + " = ?";
+        String selection = ClassesContrato.Conta._ID + "=?";
         String[] selectionArgs = {String.valueOf(id)};
-        db.delete(ClassesContrato.Conta.TABLE_NAME, selection, selectionArgs);
+        db.delete(
+                ClassesContrato.Conta.TABLE_NAME,
+                selection,
+                selectionArgs);
     }
 
-    public Conta getById(Context context, Integer id) {
+    public Conta getById(Context context, Long id) {
         ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
 
@@ -102,9 +105,9 @@ public class ContaDao {
 
         Conta contaDb = null;
 
-        String selection = ClassesContrato.Conta._ID + " = ?";
+        String selection = ClassesContrato.Conta._ID + "=?";
         String[] selectionArgs = {String.valueOf(id)};
-        String sortOrder = ClassesContrato.Conta.TABLE_NAME + " ASC";
+        String sortOrder = ClassesContrato.Conta._ID + " ASC";
 
         Cursor cursorContas = db.query(
                 ClassesContrato.Conta.TABLE_NAME,

@@ -57,7 +57,7 @@ public class LancamentoDao {
         };
         ArrayList<Lancamento> lancamentos = new ArrayList<>();
 
-        String sortOrder = ClassesContrato.Lancamento.TABLE_NAME + " ASC";
+        String sortOrder = ClassesContrato.Lancamento._ID + " ASC";
 
         Cursor cursorLancamentos = db.query(
                 ClassesContrato.Lancamento.TABLE_NAME,
@@ -121,7 +121,7 @@ public class LancamentoDao {
 
         String selection = ClassesContrato.Lancamento._ID + " = ?";
         String[] selectionArgs = {String.valueOf(id)};
-        String sortOrder = ClassesContrato.Conta.TABLE_NAME + " ASC";
+        String sortOrder = ClassesContrato.Conta._ID+ " ASC";
 
         Cursor cursorLancamentos = db.query(
                 ClassesContrato.Lancamento.TABLE_NAME,
