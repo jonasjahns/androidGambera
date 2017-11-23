@@ -1,6 +1,7 @@
 package android.jonas.edu.meugerenciadorfinanceiro;
 
 import android.content.Intent;
+import android.jonas.edu.meugerenciadorfinanceiro.dao.LancamentoDao;
 import android.jonas.edu.meugerenciadorfinanceiro.lancamentos.Lancamento;
 import android.jonas.edu.meugerenciadorfinanceiro.lancamentos.LancamentoBuilder;
 import android.jonas.edu.meugerenciadorfinanceiro.lancamentos.LancamentoDespesa;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnParcelas;
     Button btnTipo;
     TextView textParcelas;
+    LancamentoDao lancamentoDao = new LancamentoDao();
 
     Date data = new Date();
     private Integer codLancamento = 0;
@@ -75,45 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnTotais.setOnClickListener(this);
         btnConsultar.setOnClickListener(this);
         btnExcluir.setOnClickListener(this);
-        lancamentos.addAll(new LancamentoBuilder()
-                .setCodigo(1)
-                .setDescricao("Teste")
-                .setCategoria("Lazer")
-                .setSituacao("pago")
-                .setDataCriacao(new Date())
-                .setDataLancamento(new Date())
-                .setValorLancamento(new BigDecimal("52"))
-                .setNumeroParcelas(1)
-                .createLancamento("Receita"));
-        try {
-            lancamentos.addAll(new LancamentoBuilder()
-                    .setCodigo(2)
-                    .setDescricao("Novo teste")
-                    .setCategoria("Lazer")
-                    .setSituacao("pago")
-                    .setDataCriacao(new Date())
-                    .setDataLancamento(df.parse("01/11/2017"))
-                    .setValorLancamento(new BigDecimal("150"))
-                    .setNumeroParcelas(1)
-                    .createLancamento("Receita"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        try {
-            lancamentos.addAll(new LancamentoBuilder()
-                    .setCodigo(3)
-                    .setDescricao("Novo teste 2")
-                    .setCategoria("Lazer")
-                    .setSituacao("pago")
-                    .setDataCriacao(new Date())
-                    .setDataLancamento(df.parse("01/09/2017"))
-                    .setValorLancamento(new BigDecimal("51"))
-                    .setNumeroParcelas(1)
-                    .createLancamento("Despesa"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        this.codLancamento = 4;
     }
 
     @Override
@@ -163,26 +126,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 .setNumeroParcelas(new Integer(btnParcelas.getText().toString()))
                                 .createLancamento(btnTipo.getText().toString());
                         lancamentos.addAll(newLancamentos);
-                        if (codLancamento.toString().equals(newLancamentos.get(newLancamentos.size() - 1).getCodigo().toString())) {
-                            if (newLancamentos.size() == 1) {
-                                codLancamento++;
-                            } else {
-                                codLancamento += newLancamentos.size();
-                            }
-
+                        for (Lancamento lancamento : lancamentos)
+                        {
+                            lancamentoDao.insert(lancamento, this);
                         }
                     } else {
                         codAux = new Integer(textCodigo.getText().toString());
-                        Lancamento editLancamento = null;
-                        for (Lancamento lancamento : lancamentos) {
-                            if (lancamento.getCodigo().toString().equals(codAux.toString())) {
-                                editLancamento = lancamento;
-                            }
-                        }
+                        Lancamento editLancamento = lancamentoDao.getById(this, codAux);
                         editLancamento.setCategoria((btnCategoria.getText().toString()));
                         editLancamento.setDataLancamento(dataAux);
                         editLancamento.setDescricao(editDescricao.getText().toString());
                         editLancamento.setValorLancamento(new BigDecimal(editValor.getText().toString()));
+                        lancamentoDao.update(this, editLancamento);
                     }
                     BigDecimal doubleAux = new BigDecimal(editValor.getText().toString());
 
@@ -224,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnTotais:
                 it = new Intent(this, TotalActivity.class);
-                it.putParcelableArrayListExtra(MainActivity.PAR_LANCAMENTOS, lancamentos);
                 startActivity(it);
                 break;
             case R.id.btnConsultar:

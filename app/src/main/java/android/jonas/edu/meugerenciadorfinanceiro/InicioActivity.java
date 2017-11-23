@@ -23,8 +23,6 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
     private static final int REQUEST_CRIAR = 51;
     private static final int REQUEST_EDITAR = 52;
 
-    private Integer codContas = 0;
-
     Button btnContaListar;
     Button btnContaEditar;
     Button btnContaCriar;
@@ -61,6 +59,10 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.btnContaConsultar:
                 it = new Intent(this, ConsultarContaActivity.class);
+                startActivity(it);
+                break;
+            case R.id.btnLancamentos:
+                it = new Intent (this, MainActivity.class);
                 startActivity(it);
                 break;
         }

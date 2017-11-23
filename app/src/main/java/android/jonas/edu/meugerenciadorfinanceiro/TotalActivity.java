@@ -2,6 +2,7 @@ package android.jonas.edu.meugerenciadorfinanceiro;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.jonas.edu.meugerenciadorfinanceiro.dao.LancamentoDao;
 import android.jonas.edu.meugerenciadorfinanceiro.lancamentos.Lancamento;
 import android.jonas.edu.meugerenciadorfinanceiro.lancamentos.LancamentoAdapter;
 import android.jonas.edu.meugerenciadorfinanceiro.lancamentos.LancamentoDespesa;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -35,6 +37,7 @@ public class TotalActivity extends ListActivity {
     TextView editDespesa;
     TextView editReceita;
     TextView editSaldo;
+    LancamentoDao lancamentoDao = new LancamentoDao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class TotalActivity extends ListActivity {
         ImageButton setaEsquerda = (ImageButton) findViewById(R.id.setaEsquerda);
         ImageButton setaDireita = (ImageButton) findViewById(R.id.setaDireita);
         textoMes = (TextView) findViewById(R.id.textMes);
-        lancamentos = getIntent().getParcelableArrayListExtra(MainActivity.PAR_LANCAMENTOS);
+        lancamentos = lancamentoDao.getAll(this);
         atualizarTotais(filtrarLancamento(dataAtual, lancamentos));
         atualizarMes(textoMes);
         setListAdapter(new LancamentoAdapter(this, filtrarLancamento(dataAtual, lancamentos)));
@@ -59,11 +62,14 @@ public class TotalActivity extends ListActivity {
         ArrayList<Lancamento> lancamentosFiltrados = new ArrayList<Lancamento>();
         for(Lancamento lancamento : lancamentos)
         {
+            Toast.makeText(this, "Lancamentos data: " + lancamento.getDataLancamentoFormatada(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lancamentos data: " + lancamento.getDataLancamento(), Toast.LENGTH_SHORT).show();
             if (formatoMes.format(lancamento.getDataLancamento()).equals(formatoMes.format(dataFiltro)))
             {
                 lancamentosFiltrados.add(lancamento);
             }
         }
+
         return lancamentosFiltrados;
     }
 

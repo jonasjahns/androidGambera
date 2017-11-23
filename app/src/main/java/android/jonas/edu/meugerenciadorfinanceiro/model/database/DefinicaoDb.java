@@ -7,7 +7,7 @@ package android.jonas.edu.meugerenciadorfinanceiro.model.database;
 public final class DefinicaoDb {
 
     //Incrementar este número quando modificar o schema
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "Financeiro.db";
 
     public static final String TEXT_TYPE = " TEXT";
