@@ -6,9 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.jonas.edu.meugerenciadorfinanceiro.contas.Conta;
 import android.jonas.edu.meugerenciadorfinanceiro.model.database.ClassesContrato;
-import android.jonas.edu.meugerenciadorfinanceiro.model.database.ContaSqlHelper;
+import android.jonas.edu.meugerenciadorfinanceiro.model.database.SqlHelper;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 
 /**
@@ -18,18 +19,18 @@ import java.util.ArrayList;
 public class ContaDao {
 
     public void insert(Conta conta, Context context) {
-        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SqlHelper contaSqlHelper = new SqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(ClassesContrato.Conta.COLUMN_NAME_NUMERO, conta.getNumero());
-        contentValues.put(ClassesContrato.Conta.COLUMN_NAME_SALDO, conta.getSaldo().doubleValue());
-
+        Double saldoDb = new Double(conta.getSaldo().toString());
+        contentValues.put(ClassesContrato.Conta.COLUMN_NAME_SALDO, 0);
         long id = db.insert(ClassesContrato.Conta.TABLE_NAME, null, contentValues);
     }
 
     public void update(Conta conta, Context context) {
-        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SqlHelper contaSqlHelper = new SqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -40,7 +41,7 @@ public class ContaDao {
     }
 
     public ArrayList<Conta> getAll(Context context) {
-        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SqlHelper contaSqlHelper = new SqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
 
         String[] projection = {
@@ -66,7 +67,8 @@ public class ContaDao {
             while (cursorContas.isAfterLast() == false) {
                 long itemId = cursorContas.getLong(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta._ID));
                 int numero = cursorContas.getInt(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta.COLUMN_NAME_NUMERO));
-                BigDecimal saldo = new BigDecimal(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta.COLUMN_NAME_SALDO));
+                Double saldoDouble = cursorContas.getDouble(cursorContas.getColumnIndexOrThrow(ClassesContrato.Conta.COLUMN_NAME_SALDO));
+                BigDecimal saldo = new BigDecimal(saldoDouble.toString());
                 contas.add(new Conta(itemId, numero, saldo));
                 cursorContas.moveToNext();
             }
@@ -76,14 +78,14 @@ public class ContaDao {
     }
 
     public void deleteAll(Context context) {
-        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SqlHelper contaSqlHelper = new SqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getWritableDatabase();
 
         db.delete(ClassesContrato.Conta.TABLE_NAME, null, null);
     }
 
     public void deleteById(Context context, Long id) {
-        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SqlHelper contaSqlHelper = new SqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getWritableDatabase();
         String selection = ClassesContrato.Conta._ID + "=?";
         String[] selectionArgs = {String.valueOf(id)};
@@ -94,7 +96,7 @@ public class ContaDao {
     }
 
     public Conta getById(Context context, Long id) {
-        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
+        SqlHelper contaSqlHelper = new SqlHelper(context);
         SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
 
         String[] projection = {

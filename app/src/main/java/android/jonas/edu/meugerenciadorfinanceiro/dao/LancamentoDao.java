@@ -6,8 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.jonas.edu.meugerenciadorfinanceiro.lancamentos.Lancamento;
 import android.jonas.edu.meugerenciadorfinanceiro.model.database.ClassesContrato;
-import android.jonas.edu.meugerenciadorfinanceiro.model.database.ContaSqlHelper;
-import android.jonas.edu.meugerenciadorfinanceiro.model.database.LancamentoSqlHelper;
+import android.jonas.edu.meugerenciadorfinanceiro.model.database.SqlHelper;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -26,8 +25,8 @@ public class LancamentoDao {
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
     public void insert(Lancamento lancamento, Context context) {
-        LancamentoSqlHelper lancamentoSqlHelper = new LancamentoSqlHelper(context);
-        SQLiteDatabase db = lancamentoSqlHelper.getWritableDatabase();
+        SqlHelper SqlHelper = new SqlHelper(context);
+        SQLiteDatabase db = SqlHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
@@ -46,8 +45,8 @@ public class LancamentoDao {
     }
 
     public ArrayList<Lancamento> getAll(Context context) {
-        LancamentoSqlHelper lancamentoSqlHelper = new LancamentoSqlHelper(context);
-        SQLiteDatabase db = lancamentoSqlHelper.getReadableDatabase();
+        SqlHelper SqlHelper = new SqlHelper(context);
+        SQLiteDatabase db = SqlHelper.getReadableDatabase();
 
         String[] projection = {
                 ClassesContrato.Lancamento._ID,
@@ -108,15 +107,15 @@ public class LancamentoDao {
     }
 
     public void deleteAll(Context context) {
-        LancamentoSqlHelper lancamentoSqlHelper = new LancamentoSqlHelper(context);
-        SQLiteDatabase db = lancamentoSqlHelper.getWritableDatabase();
+        SqlHelper SqlHelper = new SqlHelper(context);
+        SQLiteDatabase db = SqlHelper.getWritableDatabase();
 
         db.delete(ClassesContrato.Lancamento.TABLE_NAME, null, null);
     }
 
     public Lancamento getById(Context context, Integer id) {
-        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
-        SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
+        SqlHelper SqlHelper = new SqlHelper(context);
+        SQLiteDatabase db = SqlHelper.getReadableDatabase();
 
         String[] projection = {
                 ClassesContrato.Lancamento._ID,
@@ -165,8 +164,8 @@ public class LancamentoDao {
     }
 
     public Lancamento getByIdAndConta(Context context, Integer id, Integer contaId) {
-        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
-        SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
+        SqlHelper SqlHelper = new SqlHelper(context);
+        SQLiteDatabase db = SqlHelper.getReadableDatabase();
 
         String[] projection = {
                 ClassesContrato.Lancamento._ID,
@@ -208,15 +207,16 @@ public class LancamentoDao {
             BigDecimal valorLancamento = new BigDecimal(cursorLancamentos.getLong(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_VALOR_LANCAMENTO)));
             Integer numeroParcelas = cursorLancamentos.getInt(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_NUMERO_PARCELAS));
             Integer codigo_pai = cursorLancamentos.getInt(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_CODIGO_PAI));
-            lancamentoDb = new Lancamento(codigo, descricao, categoria, situacao, dataCriacao, dataLancamento, valorLancamento, numeroParcelas, codigo_pai);
+            Integer codigoConta = cursorLancamentos.getInt(cursorLancamentos.getColumnIndexOrThrow(ClassesContrato.Lancamento.COLUMN_NAME_CODIGO_CONTA));
+            lancamentoDb = new Lancamento(codigo, descricao, categoria, situacao, dataCriacao, dataLancamento, valorLancamento, numeroParcelas, codigo_pai, codigoConta);
         }
 
         return lancamentoDb;
     }
 
     public List<Lancamento> getByContaId(Context context, Integer contaIid) {
-        ContaSqlHelper contaSqlHelper = new ContaSqlHelper(context);
-        SQLiteDatabase db = contaSqlHelper.getReadableDatabase();
+        SqlHelper SqlHelper = new SqlHelper(context);
+        SQLiteDatabase db = SqlHelper.getReadableDatabase();
 
         String[] projection = {
                 ClassesContrato.Lancamento._ID,
@@ -281,8 +281,8 @@ public class LancamentoDao {
     }
 
     public void update(Context context, Lancamento lancamento) {
-        LancamentoSqlHelper lancamentoSqlHelper = new LancamentoSqlHelper(context);
-        SQLiteDatabase db = lancamentoSqlHelper.getWritableDatabase();
+        SqlHelper SqlHelper = new SqlHelper(context);
+        SQLiteDatabase db = SqlHelper.getWritableDatabase();
 
         String selection = ClassesContrato.Lancamento._ID + " = ?";
         String[] selectionArgs = {String.valueOf(lancamento.getCodigo())};
@@ -301,8 +301,8 @@ public class LancamentoDao {
     }
 
     public void deleteByIdAndConta(Context context, Long id, Integer contaId) {
-        LancamentoSqlHelper lancamentoSqlHelper = new LancamentoSqlHelper(context);
-        SQLiteDatabase db = lancamentoSqlHelper.getWritableDatabase();
+        SqlHelper SqlHelper = new SqlHelper(context);
+        SQLiteDatabase db = SqlHelper.getWritableDatabase();
         String selection = ClassesContrato.Lancamento._ID + "=?" + "AND" + ClassesContrato.Lancamento.COLUMN_NAME_CODIGO_CONTA + "=?";
         String[] selectionArgs = {String.valueOf(id), String.valueOf(contaId)};
         db.delete(

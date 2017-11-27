@@ -62,7 +62,7 @@ public class InicioActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(it);
                 break;
             case R.id.btnLancamentos:
-                it = new Intent (this, MainActivity.class);
+                it = new Intent (this, BuscaConta.class);
                 startActivity(it);
                 break;
         }
