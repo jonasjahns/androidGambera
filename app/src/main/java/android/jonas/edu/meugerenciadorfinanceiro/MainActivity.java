@@ -1,6 +1,8 @@
 package android.jonas.edu.meugerenciadorfinanceiro;
 
 import android.content.Intent;
+import android.jonas.edu.meugerenciadorfinanceiro.contas.Conta;
+import android.jonas.edu.meugerenciadorfinanceiro.dao.ContaDao;
 import android.jonas.edu.meugerenciadorfinanceiro.dao.LancamentoDao;
 import android.jonas.edu.meugerenciadorfinanceiro.lancamentos.Lancamento;
 import android.jonas.edu.meugerenciadorfinanceiro.lancamentos.LancamentoBuilder;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnTipo;
     TextView textParcelas;
     LancamentoDao lancamentoDao = new LancamentoDao();
+    ContaDao contaDao = new ContaDao();
+    Conta conta;
 
     Date data = new Date();
     private Integer codLancamento = 0;
@@ -124,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 .setDataLancamento(dataAux)
                                 .setValorLancamento(valorParcela)
                                 .setNumeroParcelas(new Integer(btnParcelas.getText().toString()))
+                                .setCodigoConta(new Integer(getIntent().getStringExtra("idConta")))
                                 .createLancamento(btnTipo.getText().toString());
                         lancamentos.addAll(newLancamentos);
                         for (Lancamento lancamento : lancamentos)
@@ -187,10 +192,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnExcluir:
                 if (textCodigo.getText().toString() != "") {
-                    Integer codigo = new Integer(textCodigo.getText().toString());
-                    Lancamento lancamento = buscaLancamento(codigo);
-                    lancamentos.remove(lancamento);
+                    lancamentoDao.deleteByIdAndConta(this, new Long(textCodigo.getText().toString()), new Integer(getIntent().getStringExtra("idConta")));
                     tornarValorPadrao();
+                    Toast.makeText(this, "Lancamento deletado", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Não há lançamento selecionado", Toast.LENGTH_SHORT).show();
                 }
@@ -222,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (resultCode == RESULT_OK && requestCode == REQUEST_CONSULTAR) {
             String codigoStr = data.getStringExtra("codigo");
             Integer codigo = new Integer(codigoStr.toString());
-            Lancamento lancamento = buscaLancamento(codigo);
+            Lancamento lancamento = lancamentoDao.getByIdAndConta(this, codigo, new Integer(getIntent().getStringExtra("idConta")));
             if (lancamento != null) {
                 textCodigo.setText(lancamento.getCodigo().toString());
                 editDescricao.setText(lancamento.getDescricao());
@@ -255,16 +259,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editValor.setText("");
         btnParcelas.setText("1");
         btnTipo.setText("Selecione");
-    }
-
-    public Lancamento buscaLancamento(Integer codigo) {
-        Lancamento lancamento = null;
-        for (Lancamento aux : lancamentos) {
-            Toast.makeText(this, "Código: " + codigo + " Comparando: " + aux.getCodigo(), Toast.LENGTH_SHORT).show();
-            if (aux.getCodigo().toString().equals(codigo.toString())) {
-                lancamento = aux;
-            }
-        }
-        return lancamento;
     }
 }

@@ -30,6 +30,7 @@ public final class ClassesContrato {
         public static final String COLUMN_NAME_VALOR_LANCAMENTO = "valor_lancamento";
         public static final String COLUMN_NAME_NUMERO_PARCELAS = "numero_parcelas";
         public static final String COLUMN_NAME_CODIGO_PAI = "codigo_pai";
+        public static final String COLUMN_NAME_CODIGO_CONTA = "codigo_conta";
     }
 
 }

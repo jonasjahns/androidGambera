@@ -19,7 +19,7 @@ public class LancamentoSqlHelper extends SQLiteOpenHelper {
             ClassesContrato.Lancamento.COLUMN_NAME_VALOR_LANCAMENTO+ DefinicaoDb.REAL_TYPE+ DefinicaoDb.COMMA_SEP +
             ClassesContrato.Lancamento.COLUMN_NAME_NUMERO_PARCELAS+ DefinicaoDb.INTEGER_TYPE+ DefinicaoDb.COMMA_SEP +
             ClassesContrato.Lancamento.COLUMN_NAME_CODIGO_PAI+ DefinicaoDb.INTEGER_TYPE+ DefinicaoDb.COMMA_SEP +
-            ClassesContrato.Conta.COLUMN_NAME_SALDO + DefinicaoDb.REAL_TYPE + " )";
+            ClassesContrato.Lancamento.COLUMN_NAME_CODIGO_CONTA + DefinicaoDb.INTEGER_TYPE + DefinicaoDb.COMMA_SEP + " )";
 
   private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + ClassesContrato.Lancamento.TABLE_NAME;
 

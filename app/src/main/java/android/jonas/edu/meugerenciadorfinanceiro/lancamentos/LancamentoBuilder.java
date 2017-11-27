@@ -17,6 +17,7 @@ public class LancamentoBuilder {
     private Date dataLancamento;
     private BigDecimal valorLancamento;
     private Integer numeroParcelas;
+    private Integer codigoConta;
 
     public LancamentoBuilder setCodigo(Integer codigo) {
         this.codigo = codigo;
@@ -58,18 +59,24 @@ public class LancamentoBuilder {
         return this;
     }
 
+    public LancamentoBuilder setCodigoConta (Integer codigoConta)
+    {
+        this.codigoConta = codigoConta;
+        return this;
+    }
+
     public List<Lancamento> createLancamento(String tipo) {
         System.out.println("String tipo: " + tipo);
         ArrayList<Lancamento> lancamentos = new ArrayList<Lancamento>();
         if (tipo.equals("Receita")) {
-            lancamentos.add(new LancamentoReceita(codigo, descricao, categoria, defineSituacao(dataLancamento, tipo), dataCriacao, dataLancamento, valorLancamento, numeroParcelas));
+            lancamentos.add(new LancamentoReceita(codigo, descricao, categoria, defineSituacao(dataLancamento, tipo), dataCriacao, dataLancamento, valorLancamento, numeroParcelas, codigoConta));
         } else {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(dataLancamento);
-            lancamentos.add(new LancamentoDespesa(codigo, descricao, categoria, defineSituacao(calendar.getTime(), tipo), dataCriacao, calendar.getTime() , valorLancamento, numeroParcelas));
+            lancamentos.add(new LancamentoDespesa(codigo, descricao, categoria, defineSituacao(calendar.getTime(), tipo), dataCriacao, calendar.getTime() , valorLancamento, numeroParcelas, codigoConta));
             for (int i = 1 ; i< numeroParcelas; i++) {
                 calendar.add(Calendar.MONTH, 1);
-                lancamentos.add(new LancamentoDespesa(codigo+i, descricao, categoria, defineSituacao(calendar.getTime(), tipo), dataCriacao, calendar.getTime() , valorLancamento, numeroParcelas,codigo));
+                lancamentos.add(new LancamentoDespesa(codigo+i, descricao, categoria, defineSituacao(calendar.getTime(), tipo), dataCriacao, calendar.getTime() , valorLancamento, numeroParcelas,codigo, codigoConta));
             }
 
         }

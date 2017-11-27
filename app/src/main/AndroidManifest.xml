@@ -10,17 +10,12 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".ateg"
-            android:label="@string/title_activity_ateg"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".CategoriaActivity"
             android:label="@string/title_activity_categoria"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SituacaoActivity" />
         <activity android:name=".TipoActivity" />
         <activity android:name=".TotalActivity" />
-        <activity android:name=".Exibir" />
         <activity android:name=".ConsultarActivity" />
         <activity
             android:name=".ParcelasActivity"
@@ -39,7 +34,8 @@
         <activity android:name=".contas.CriarContaActivity" />
         <activity android:name=".contas.ListarContaActivity" />
         <activity android:name=".contas.EditarContaActivity" />
-        <activity android:name=".contas.ConsultarContaActivity"></activity>
+        <activity android:name=".contas.ConsultarContaActivity" />
+        <activity android:name=".BuscaConta"></activity>
     </application>
 
 </manifest>

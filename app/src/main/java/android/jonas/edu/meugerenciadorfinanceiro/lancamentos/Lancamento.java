@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class Lancamento implements  Parcelable{
+public class Lancamento implements Parcelable {
     Integer codigo;
     String descricao;
     String categoria;
@@ -20,12 +20,14 @@ public class Lancamento implements  Parcelable{
     BigDecimal valorLancamento;
     Integer numeroParcelas;
     Integer codigo_pai;
+    Integer codigoConta;
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-    public String getDataCriacaoFormatada(){
+    public String getDataCriacaoFormatada() {
         return df.format(this.dataCriacao);
     }
-    public String getDataLancamentoFormatada(){
+
+    public String getDataLancamentoFormatada() {
         return df.format(this.dataLancamento);
     }
 
@@ -41,7 +43,7 @@ public class Lancamento implements  Parcelable{
         }
     };
 
-    private Lancamento(Parcel parcel){
+    private Lancamento(Parcel parcel) {
         try {
             dataLancamento = df.parse(parcel.readString());
         } catch (ParseException e) {
@@ -74,7 +76,7 @@ public class Lancamento implements  Parcelable{
         this.codigo_pai = codigo_pai;
     }
 
-    public Lancamento(Integer codigo, String descricao, String categoria, String situacao, Date dataCriacao, Date dataLancamento, BigDecimal valorLancamento, Integer numeroParcelas, Integer codigo_pai) {
+    public Lancamento(Integer codigo, String descricao, String categoria, String situacao, Date dataCriacao, Date dataLancamento, BigDecimal valorLancamento, Integer numeroParcelas, Integer codigo_pai, Integer codigoConta) {
         this.codigo = codigo;
         this.descricao = descricao;
         this.categoria = categoria;
@@ -84,9 +86,10 @@ public class Lancamento implements  Parcelable{
         this.valorLancamento = valorLancamento;
         this.numeroParcelas = numeroParcelas;
         this.codigo_pai = codigo_pai;
+        this.codigoConta = codigoConta;
     }
 
-    public Lancamento(Integer codigo, String descricao, String categoria, String situacao, Date dataCriacao, Date dataLancamento, BigDecimal valorLancamento, Integer numeroParcelas) {
+    public Lancamento(Integer codigo, String descricao, String categoria, String situacao, Date dataCriacao, Date dataLancamento, BigDecimal valorLancamento, Integer numeroParcelas, Integer codigoConta) {
         this.codigo = codigo;
         this.descricao = descricao;
         this.categoria = categoria;
@@ -95,6 +98,7 @@ public class Lancamento implements  Parcelable{
         this.dataLancamento = dataLancamento;
         this.valorLancamento = valorLancamento;
         this.numeroParcelas = numeroParcelas;
+        this.codigoConta = codigoConta;
     }
 
     public Integer getCodigo() {
@@ -149,7 +153,16 @@ public class Lancamento implements  Parcelable{
         return valorLancamento;
     }
 
+    public Integer getCodigoConta() {
+        return codigoConta;
+    }
+
+    public void setCodigoConta(Integer codigoConta) {
+        this.codigoConta = codigoConta;
+    }
+
     public void setValorLancamento(BigDecimal valorLancamento) {
+
         this.valorLancamento = valorLancamento;
     }
 
